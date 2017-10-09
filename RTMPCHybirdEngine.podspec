@@ -120,7 +120,7 @@ Pod::Spec.new do |s|
   # s.framework  = "SomeFramework"
   s.frameworks =  "AVFoundation","AudioToolbox","VideoToolbox","CoreMedia","OpenGLES"
 
-   s.library   = "libiconv"
+  # s.library   = "libiconv"
   # s.libraries = "iconv", "xml2"
 
 
