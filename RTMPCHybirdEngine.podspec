@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RTMPCHybirdEngine"
-  s.version      = "1.0.1"
+  s.version      = "1.0.3"
   s.summary      = "直播连麦SDK,RTMPCHybirdEngine -iOS"
 
   # This description is used to generate tags and improve search results.
@@ -90,11 +90,12 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-
-   s.source_files  = "RTMPCHybirdEngine", "RTMPCHybirdEngine/**/*.h"
+  # s.vendored_frameworks = "RTMPCHybirdEngine.framework"
+  # s.vendored_frameworks = 'RTMPCHybirdEngine.framework'
+  # s.source_files  = "RTMPCHybirdEngine", "RTMPCHybirdEngine/**/*.h"
   # s.exclude_files = "Classes/Exclude"
 
-  # s.public_header_files = "RTMPCHybirdEngine/**/*.h"
+  s.public_header_files =  "RTMPCHybirdEngine/**/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -118,7 +119,7 @@ Pod::Spec.new do |s|
   #
 
   # s.framework  = "SomeFramework"
-  s.frameworks =  "AVFoundation","AudioToolbox","VideoToolbox","CoreMedia","OpenGLES"
+  #s.frameworks =  "AVFoundation","AudioToolbox","VideoToolbox","CoreMedia","OpenGLES"
 
   # s.library   = "libiconv"
   # s.libraries = "iconv", "xml2"
