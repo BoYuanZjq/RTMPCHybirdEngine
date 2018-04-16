@@ -12,7 +12,10 @@
 #import "RTMPCGuestDelegate.h"
 #import "RTCCommon.h"
 #import "RTMPCGuestOption.h"
+<<<<<<< HEAD:RTMPCHybirdEngine/RTMPCHybirdEngine.framework/Headers/RTMPCGuestKit.h
 #import "AnyRTCUserShareBlockDelegate.h"
+=======
+>>>>>>> origin/master:RTMPCHybirdEngine.framework/Headers/RTMPCGuestKit.h
 
 @interface RTMPCGuestKit : NSObject {
     
