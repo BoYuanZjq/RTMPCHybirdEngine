@@ -9,12 +9,8 @@
 #ifndef RTMPCHybridEngineKit_h
 #define RTMPCHybridEngineKit_h
 #import <UIKit/UIKit.h>
-#include "RTMPCCommon.h"
-typedef NS_ENUM(NSInteger,RTMPCCameraType) {
-    RTMPCCameraTypeNomal = 0,      // 正常的相机模式,系统自带的（效率高）
-    RTMPCCameraTypeBeauty,         // 美颜相机模式
-    RTMPCCameraTypeThreeFilter     // 第三方滤镜模式 eg:图图，FaceU等等;
-};
+#include "RTCCommon.h"
+
 @interface RTMPCHybridEngineKit : NSObject {
     
 }
@@ -25,6 +21,7 @@ typedef NS_ENUM(NSInteger,RTMPCCameraType) {
  @param strAppId     AppId；
  @param strAppKey    AppKey；
  @param strAppToken  AppToken；
+ 说明：该方法为配置开发者信息，上述参数均可在https://www.anyrtc.io/ manage创建应用后,管理中心获得；建议在AppDelegate.m调用。
  */
 + (void)initEngineWithAnyRTCInfo:(NSString*)strDeveloperId andAppId:(NSString*)strAppId andKey:(NSString*)strAppKey andToke:(NSString*)strAppToken;
 
@@ -33,6 +30,7 @@ typedef NS_ENUM(NSInteger,RTMPCCameraType) {
 
  @param strAddress 私有云服务地址；
  @param nPort   私有云服务端口；
+ 说明：配置私有云信息，当使用私有云时才需要进行配置，默认无需配置。
  */
 + (void)configServerForPriCloud:(NSString*)strAddress andPort:(int)nPort;
 
@@ -42,41 +40,6 @@ typedef NS_ENUM(NSInteger,RTMPCCameraType) {
  @return 版本号
  */
 + (NSString*)getSdkVersion;
-
-
-/**
- 设置相机类型
-
- @param cameraType 相机模式
- 说明：根据自己的需求，选择相应的相机类型
- */
-+ (void)setCameraType:(RTMPCCameraType) cameraType;
-
-/**
- 设置音频直播模式
-
- @param bAudioOnly   是否仅音频直播，默认关闭；
- @param bAudioDetect 是否音频检测,仅音频模式下生效；
- 说明:设置音频模式直播，bAudioOnly 为yes音频模式。bAudioOnly为no音视频模式。
- */
-+ (void)setAudioModel:(BOOL)bAudioOnly withAudioDetect:(BOOL)bAudioDetect;
-
-/**
- 设置视频竖屏
- 
- @param bTop YES:上朝向
- 　　　　　　　　NO:下朝向
- 说明：默认竖屏
- */
-+ (void)setScreenToPortrait:(BOOL)bTop;
-/**
- 设置视频横屏
-
- @param bLeft YES:左朝向;
-      　       NO:右朝向
- 说明：如果为横屏横屏，必须设置，如果不设置，录像以及连麦合成流会出错
- */
-+ (void)setScreenToLandscape:(BOOL)bLeft;
 
 @end
 

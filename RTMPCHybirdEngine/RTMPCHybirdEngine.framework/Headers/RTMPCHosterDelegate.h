@@ -102,21 +102,23 @@
  游客视频连麦接通
 
  @param strLivePeerId 连麦者标识id（用于标识连麦用户，每次连麦随机生成）
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
  @param strUserId 游客在开发者平台的用户Id；
  @param strUserData 游客加入RTC连接的自定义参数体（可查看游客端加入RTC连接方法)；
  说明：主播与游客的连麦接通后视频将要显示的回调，开发者需调用设置连麦者视频窗口（setRTCVideoRender）方法。*具体使用请查看主播端主要方法-设置连麦者视频窗口。
  */
-- (void)onRTCOpenVideoRender:(NSString*)strLivePeerId withUserId:(NSString *)strUserId withUserData:(NSString*)strUserData;
+- (void)onRTCOpenVideoRender:(NSString*)strLivePeerId withRTCPubId:(NSString *)strRTCPubId withUserId:(NSString *)strUserId withUserData:(NSString*)strUserData;
 
 
 /**
  游客视频连麦挂断
 
  @param strLivePeerId 连麦者标识Id（用于标识连麦用户，每次连麦随机生成)；
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
  @param strUserId 游客在开发者平台的用户Id；
  说明：主播与游客的连麦挂断后将会回调此方法；挂断不分游客主动挂断还是主播挂断游客，均会回调此方法，需本地移除连麦者视图。
  */
-- (void)onRTCCloseVideoRender:(NSString*)strLivePeerId withUserId:(NSString *)strUserId;
+- (void)onRTCCloseVideoRender:(NSString*)strLivePeerId withRTCPubId:(NSString *)strRTCPubId withUserId:(NSString *)strUserId;
 
 /**
  游客音频连麦接通
@@ -135,6 +137,18 @@
  说明：仅在音频直播时有效。
  */
 - (void)onRTCCloseAudioLine:(NSString*)strLivePeerId withUserId:(NSString *)strUserId;
+
+/**
+ 其他连麦者视频窗口的对音视频的操作
+ 
+ @param strRTCPeerId  RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)；
+ @param bAudio yes为打开音频，no为关闭音频
+ @param bVideo yes为打开视频，no为关闭视频
+ 说明：比如对方关闭了音频，对方关闭了视频
+ */
+-(void)onRTCAVStatus:(NSString*) strRTCPeerId withAudio:(BOOL)bAudio withVideo:(BOOL)bVideo;
+
+
 /**
  视频窗口大小改变
  
@@ -177,6 +191,7 @@
  说明:strServerId和strRoomId参数用于请求人员列表。
  */
 -(void)onRTCMemberListNotify:(NSString*)strServerId withRoomId:(NSString*)strRoomId withAllMember:(int) nTotalMember;
+
 @end
 
 #endif /* RTMPCHosterDelegate_h */

@@ -10,7 +10,7 @@
 #define RTMPCHosterKit_h
 #import <UIKit/UIKit.h>
 #import "RTMPCHosterDelegate.h"
-#import "RTMPCCommon.h"
+#import "RTMPCHosterOption.h"
 
 
 @interface RTMPCHosterKit : NSObject {
@@ -25,9 +25,10 @@
  实例化主播对象
 
  @param delegate RTMP推流相关回调代理
+ @param option 配置项
  @return 主播对象
  */
-- (instancetype)initWithDelegate:(id<RTMPCHosterRtmpDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<RTMPCHosterRtmpDelegate>)delegate andOption:(RTMPCHosterOption *)option;
 
 /**
  销毁主播对象，相当于析构函数
@@ -46,22 +47,9 @@
  设置本地视频采集窗口
 
  @param render 视频显示对象
- @param bFront 是否用前置摄像头
- 说明：该方法用于本地视频采集。如果RTMPCHybirdEngineKit　中调用了useSystemBeautyFilter方法，
+ 说明：该方法用于本地视频采集。
  */
-- (void)setLocalVideoCapturer:(UIView*)render andUseFront:(bool)bFront;
-
-/**
- 设置推流视频质量
-
- @param videoMode 质量类型
-        RTMPC_Video_1080P:1920*1080,码率:2048
-        RTMPC_Video_Low、RTMPC_Video_SD、RTMPC_Video_QHD:640*480,码率:384,512,768
-        RTMPC_Video_HD:960*540,码率:1024
-
- 说明:(手机直播建议 RTMPC_Video_SD)
- */
-- (void)setVideoMode:(RTMPCVideoMode)videoMode;
+- (void)setLocalVideoCapturer:(UIView*)render;
 /**
  设置录像地址
  
@@ -91,15 +79,15 @@
  @param bEnable 打开或关闭本地音频
  说明：yes为传输音频,no为不传输音频，默认传输
  */
-- (void)setLocalAudioEnable:(bool)bEnable;
+- (void)setLocalAudioEnable:(BOOL)bEnable;
 
 /**
  设置本地视频是否传输
 
- @param bEenable 打开或关闭本地视频
+ @param bEnable 打开或关闭本地视频
  说明：yes为传输视频，no为不传输视频，默认视频传输
  */
-- (void)setLocalVideoEnable:(bool)bEenable;
+- (void)setLocalVideoEnable:(BOOL)bEnable;
 
 /**
  切换前后摄像头
@@ -112,7 +100,7 @@
 
  @param bEnable YES/NO:美颜/不美颜
  */
-- (void)setBeautyEnable:(bool) bEnable;
+- (void)setBeautyEnable:(BOOL) bEnable;
 /**
  打开手机闪光灯
 
@@ -121,7 +109,7 @@
  @return 返回成功与否
  说明：打开手机闪光灯。
  */
-- (BOOL)openCameraTorchMode:(bool)bOn;
+- (BOOL)openCameraTorchMode:(BOOL)bOn;
 
 /**
  打开对焦功能(iOS特有)
@@ -154,6 +142,15 @@
  说明：默认关闭
  */
 - (void)setFontCameraMirrorEnable:(BOOL)bEnable;
+
+/**
+ 设置视频水印
+
+ @param lgFilePath 图片的地址（jpg,jpeg格式的图片）
+ @param rightX 距离右边边距
+ @param topY 距离的顶部边距
+ */
+- (void)setVideoRightTopLogo:(NSString *)lgFilePath andOriginX:(int)rightX andOriginY:(int)topY;
 
 #pragma mark RTC function for line
 /**
@@ -191,11 +188,11 @@
 /**
  设置连麦者视频窗口
  
- @param strLivePeerID RTC服务生成的连麦者标识Id (用于标识连麦用户，每次连麦随机生成)；
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
  @param render 对方视频的窗口，本地设置；
- 说明：该方法用于游客申请连麦接通后，游客视频连麦接通回调中（OnRTCOpenVideoRender）使用。
+ 说明：该方法用于游客申请连麦接通后，游客视频连麦接通回调中（onRTCOpenVideoRender）使用。
  */
-- (void)setRTCVideoRender:(NSString*)strLivePeerID andRender:(UIView*)render;
+- (void)setRTCVideoRender:(NSString*)strRTCPubId andRender:(UIView*)render;
 
 /**
  挂断游客连麦
@@ -208,7 +205,7 @@
 /**
  发送消息
 
- @param nType 消息类型:0:普通消息;1:弹幕消息
+ @param eType 消息类型:RTMPC_Nomal_Message_Type:普通消息;RTMPC_Barrage_Message_Type:弹幕消息
  @param strUserName 用户昵称(最大256字节)，不能为空，否则发送失败；
  @param strUserHeaderUrl 用户头像(最大512字节)，可选
  @param strContent 消息内容(最大1024字节)不能为空，否则发送失败；
@@ -216,13 +213,21 @@
  说明：默认普通消息。以上参数均会出现在游客/主播消息回调方法中，如果创建RTC连接（createRTCLine）没有设置strUserid，发送失败。
  */
 
-- (int)sendUserMessage:(int)nType withUserName:(NSString*)strUserName andUserHeader:(NSString*)strUserHeaderUrl andContent:(NSString*)strContent;
+- (int)sendUserMessage:(RTMPCMessageType)eType withUserName:(NSString*)strUserName andUserHeader:(NSString*)strUserHeaderUrl andContent:(NSString*)strContent;
 
 /**
  关闭RTC链接
  说明：主播端如果调用此方法，将会关闭RTC服务，若开启了直播在线功能（可在www.anyrtc.io 应用管理中心开通），游客端会收到主播已离开(onRTCLineLeave)的回调。
  */
 - (void)closeRTCLine;
+
+
+/**
+ 设置副视频、连麦用户关闭视频后显示填充图（vip专用接口，预想使用，请联系商务）
+ 
+ @param bgFilePath 图片的地址（jpg,jpeg格式的图片）
+ */
+- (void)setVideoSubBackground:(NSString *)bgFilePath;
 
 /**
  设置合成视频显示模板
@@ -243,8 +248,9 @@
  @param eDir （排布方向）RTMPC_V_T_DIR_HOR：水平排布 RTMPC_V_T_DIR_VER：垂直排布
  @param nPadhor 水平的间距（左右间距：最左边或者最后边的视频离边框的距离）
  @param nPadver 垂直的间距（上下间距：最上面或者最下面离边框的距离）
+ @param nLineWidth 小窗口的边框的宽度（边框为白色）
  */
-- (void)setVideoTemplate:(RTMPCVideoTempHor)eHor temVer:(RTMPCVideoTempVer)eVer temDir:(RTMPCVideoTempDir)eDir padhor:(int)nPadhor padver:(int)nPadver;
-@end
+- (void)setVideoTemplate:(RTMPCVideoTempHor)eHor temVer:(RTMPCVideoTempVer)eVer temDir:(RTMPCVideoTempDir)eDir padhor:(int)nPadhor padver:(int)nPadver lineWidth:(int)nLineWidth;
 
+@end
 #endif /* RTMPCHosterKit_h */

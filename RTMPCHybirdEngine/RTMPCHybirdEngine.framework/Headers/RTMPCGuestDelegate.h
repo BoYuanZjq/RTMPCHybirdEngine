@@ -80,10 +80,10 @@
 - (void)onRTCHangupLine;
 
 /**
- 主播断开RTC服务连接
+ 断开RTC服务连接
 
  @param nCode 状态码
- 说明：主播端关闭直播断开RTC服务后会回调此方法。
+ 说明：１：主播端关闭直播断开RTC服务后会回调此方法。２：自己加入RTC后，断网后在链接网络，会回调此方法
  */
 - (void)onRTCLineLeave:(int)nCode;
 
@@ -91,23 +91,25 @@
  其他游客视频连麦接通
 
  @param strLivePeerId 连麦者标识id（用于标识连麦用户，每次连麦随机生成）
- @param strUserId 游客业务平台的用户id
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
+ @param strUserId 游客业务平台的用户id；
  @param strUserData 游客业务平台的相关信息（昵称，头像等)；
  说明：游客同样也在连麦中才会调用，此时应调用设置其它连麦者视频窗口（setRTCVideoRender）方法用于显示连麦者图像。
  */
-- (void)onRTCOpenVideoRender:(NSString*)strLivePeerId withUserId:(NSString *)strUserId withUserData:(NSString*)strUserData;
+- (void)onRTCOpenVideoRender:(NSString*)strLivePeerId withRTCPubId:(NSString *)strRTCPubId withUserId:(NSString *)strUserId withUserData:(NSString*)strUserData;
 
 /**
  其他游客视频连麦挂断
 
- @param strLivePeerId 连麦者标识id（用于标识连麦用户，每次连麦随机生成）
+ @param strLivePeerId 连麦者标识id（用于标识连麦用户，每次连麦随机生成)
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
  @param strUserId 游客业务平台的用户id
  说明：
  1.游客同样也在连麦中才会走该回调；
  2.不论是其他游客主动挂断连麦还是主播挂断游客连麦均会走该回调。
  只有在连麦中才会调用，此时应移除本地连麦者图像。
  */
-- (void)onRTCCloseVideoRender:(NSString*)strLivePeerId withUserId:(NSString *)strUserId;
+- (void)onRTCCloseVideoRender:(NSString*)strLivePeerId withRTCPubId:(NSString *)strRTCPubId withUserId:(NSString *)strUserId;
 /**
  其他游客音频连麦接通
  
@@ -135,6 +137,18 @@
  说明：只有设置了音频模式（setAudioModel）才会有回调
  */
 - (void)onRTCAudioActive:(NSString *)strLivePeerId withUserId:(NSString *)strUserId withShowTime:(int)nTime;
+
+/**
+ 其他连麦者或主播视频窗口的对音视频的操作
+ 
+ @param strRTCPeerId  RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)；
+ @param bAudio yes为打开音频，no为关闭音频
+ @param bVideo yes为打开视频，no为关闭视频
+ 说明：比如对方关闭了音频，对方关闭了视频
+ */
+-(void)onRTCAVStatus:(NSString*) strRTCPeerId withAudio:(BOOL)bAudio withVideo:(BOOL)bVideo;
+
+
 /**
  视频窗口大小改变
  
@@ -167,6 +181,8 @@
  */
 -(void)onRTCMemberListNotify:(NSString*)strServerId withRoomId:(NSString*)strRoomId withAllMember:(int) nTotalMember;
 
+- (void)onRTCLiveStart;
+- (void)onRTCLiveStop;
 @end
 
 #endif /* RTMPCGuestDelegate_h */

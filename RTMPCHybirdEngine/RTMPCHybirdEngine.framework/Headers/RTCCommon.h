@@ -17,6 +17,7 @@ typedef enum {
     AnyRTC_NET_ERR = 100,			// 网络错误
 	AnyRTC_NET_DISSCONNECT = 101,	// 网络断开
     AnyRTC_LIVE_ERR	= 102,			// 直播出错
+	AnyRTC_EXP_ERR = 103,			// 异常错误
 
     AnyRTC_BAD_REQ = 201,		// 服务不支持的错误请求
     AnyRTC_AUTH_FAIL = 202,		// 认证失败
@@ -34,24 +35,69 @@ typedef enum {
 
 //连麦
 typedef enum {
-	RTCLive_OK = 0,				// 正常
-	RTCLive_NOT_START = 600,	// 直播未开始
-	RTCLive_HOSTER_REJECT,		// 主播拒绝连麦
-	RTCLive_LINE_FULL,			// 连麦已满
-	RTCLive_CLOSE_ERR,			// 游客关闭错误，onRtmpPlayerClosed
+	RTCLive_OK = 0,					// 正常
+	RTCLive_NOT_START = 600,		// 直播未开始
+	RTCLive_HOSTER_REJECT = 601,	// 主播拒绝连麦
+	RTCLive_LINE_FULL = 602,		// 连麦已满
+	RTCLive_CLOSE_ERR = 603,		// 游客关闭错误，onRtmpPlayerClosed
+	RTCLive_HAS_OPENED = 604,		// 直播已经开始，不能重复开启
+	RTCLive_IS_STOP = 605,			// 直播已结束
 }RTCLiveErrorCode;
 
 //Meet
 typedef enum {
 	RTCMeet_OK = 0,      // 正常
 	RTCMeet_NOT_START = 700,  // 会议未开始
+	RTCMeet_IS_FULL = 701,	  // 会议室已满
 }RTCMeetErrorCode;
 
+//P2PCall
+typedef enum {
+	RTCCall_OK = 0,      // 正常
+	RTCCall_PEER_BUSY = 800,  // 对方正忙
+	RTCCall_OFFLINE,		// 对方不在线
+	RTCCall_NOT_SELF,		// 不能呼叫自己
+	RTCCall_EXP_OFFLINE,	// 通话中对方意外掉线
+	RTCCall_EXP_EXIT,		// 对方异常导致(如：重复登录帐号将此前的帐号踢出)
+	RTCCall_TIMEOUT,		// 呼叫超时(45秒)
+	RTCCall_NOT_SURPPORT,	// 不支持
+}RTCCallErrorCode;
+
+//Meet
+typedef enum {
+    RTCMeet_Videos_HHD = 0,    //* 1920*1080 - 2048kbps
+    RTCMeet_Videos_HD,        //* 1280*720 - 1024kbps
+    RTCMeet_Videos_QHD,       //* 960*540 - 768kbps
+    RTCMeet_Videos_SD,        //* 640*480 - 384kbps
+    RTCMeet_Videos_Low,       //* 352*288 - 256kbps
+    RTCMeet_Videos_Flow       //* 320*240 - 128kbps
+}RTCMeetVideosMode;
 //RTCP
 typedef enum {
 	RTCRtcp_OK = 0,      // 正常
 	RTCRtcp_NOT_START = 800,     // 会议未开始
 }RTCRtcpErrorCode;
+
+//Talk
+typedef enum {
+	RTCTalk_OK = 0,      // 正常
+	RTCTalk_APPLY_SVR_ERR = 800,    // 申请麦但是服务器异常 (没有MCU服务器,暂停申请)
+	RTCTalk_APPLY_BUSY = 801,		// 当前你正在忙
+	RTCTalk_APPLY_NO_PRIO = 802,	// 当前麦被占用 (有人正在说话切你的权限不够)
+	RTCTalk_APPLY_INITING = 803,	// 正在初始化中 (自身的通道没有发布成功,不能申请)
+	RTCTalk_APPLY_ING = 804,		// 等待上麦
+	RTCTalk_ROBBED = 810,			// 麦被抢掉了
+	RTCTalk_BREAKED = 811,			// 麦被释放了
+	RTCTalk_RELEASED_BY_P2P = 812,	// 麦被释放了，因为要对讲
+	RTCTalk_P2P_OFFLINE = 820,		// 强插时，对方可能不在线了或异常离线
+	RTCTalk_P2P_BUSY = 821,			// 强插时，对方正忙
+	RTCTalk_P2P_NOT_TALK = 822,		// 强插时，对方不在麦上
+	RTCTalk_V_MON_OFFLINE = 830,	// 视频监看时，对方不在线，或下线了
+	RTCTalk_V_MON_GRABED = 831,		// 视频监看被抢占了
+	RTCTalk_CALL_OFFLINE = 840,		// 对方不在线或掉线了
+	RTCTalk_CALL_NO_PRIO = 841,		// 发起呼叫时自己有其他业务再进行(资源被占用)
+	RTCTalk_CALL_NOT_FOUND = 842,	// 会话不存在
+}RTCTalkErrorCode;
 
 typedef enum {
     RTC_V_1X3 = 0 ,       // Default - One big screen and 3 subscreens
@@ -63,6 +109,13 @@ typedef enum {
     RTMPC_LINE_V_1_equal_others = 1,	// 　主播跟副主播视频大小一致
     RTMPC_LINE_V_1big_3small = 2,		// 　主播大屏（非全屏）副主播小屏
 }RTMPCLineVideoLayout;
+
+typedef enum {
+	RTP2P_CALL_Video = 0,		//	默认视频呼叫
+	RTP2P_CALL_VideoPro = 1,	//	视频呼叫Pro模式: 被呼叫方可先看到对方视频
+	RTP2P_CALL_Audio  = 2,		//	音频呼叫
+	RTP2P_CALL_VideoMon = 3		//	视频监看模式,此模式被叫端只能是Android
+}RTP2PCallMode;
 
 typedef enum {
     RTMPC_Video_HH = 0,
@@ -124,4 +177,8 @@ typedef enum {
     RTMPC_V_T_DIR_VER
 }RTMPCVideoTempDir;
 
+typedef enum {
+    RTMPC_Nomal_Message_Type = 0,//普通文本消息
+    RTMPC_Barrage_Message_Type = 1   //弹幕消息
+}RTMPCMessageType;
 #endif	// __RTC_COMMON_H__

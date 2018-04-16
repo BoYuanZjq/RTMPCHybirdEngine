@@ -10,22 +10,13 @@
 #define RTMPCGuestKit_h
 #import <UIKit/UIKit.h>
 #import "RTMPCGuestDelegate.h"
-#include "RTMPCCommon.h"
-
-typedef NS_ENUM(NSInteger,VideoShowMode){
-    VideoShowModeScaleAspectFit,   
-    VideoShowModeScaleAspectFill,  // default by height scale (高度填充整个屏幕)
-    VideoShowModeCenter
-};
+#import "RTCCommon.h"
+#import "RTMPCGuestOption.h"
+#import "AnyRTCUserShareBlockDelegate.h"
 
 @interface RTMPCGuestKit : NSObject {
     
 }
-
-/**
- 播放器显示模式
- */
-@property (nonatomic, assign) VideoShowMode videoContentMode;
 
 /**
  RTC 相关回调代理，如果不用RTC，该回调不用设置
@@ -36,9 +27,10 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
  实例化游客端对象
 
  @param delegate RTMP相关回调代理
+ @param option 配置项
  @return 游客端对象
  */
-- (instancetype)initWithDelegate:(id<RTMPCGuestRtmpDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<RTMPCGuestRtmpDelegate>)delegate andOption:(RTMPCGuestOption *)option;
 ;
 
 /**
@@ -66,19 +58,18 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
  设置本地视频采集
 
  @param render 视频显示对象;
- @param bFont 是否用前置摄像头，yes为前置；no为后置;
  说明：方法用于申请连麦结果回调方法中（onRTCApplyLineResult）。连麦接通后，设置本地连麦图像采集。
  */
-- (void)setLocalVideoCapturer:(UIView*)render andUseFront:(bool)bFont;
+- (void)setLocalVideoCapturer:(UIView*)render;
 
 /**
  设置其他连麦者视频窗口
 
- @param strLivePeerId RTC服务生成的连麦者标识Id (用于标识连麦用户，每次连麦随机生成)；
+ @param strRTCPubId 连麦者视频流id(用于标识连麦者发布的流)；
  @param render 显示对方视频；
  说明：该方法用于其他游客视频连麦接通回调方法（onRTCOpenVideoRender）中，设置其他游客连麦视频窗口。
  */
-- (void)setRTCVideoRender:(NSString*)strLivePeerId andRender:(UIView*)render;
+- (void)setRTCVideoRender:(NSString*)strRTCPubId andRender:(UIView*)render;
 
 /**
  切换前后摄像头
@@ -133,7 +124,6 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
  @return yes：成功 no：失败。
  */
 - (BOOL)startRtmpPlay:(NSString*)strUrl andRender:(UIView*)render;
-
 /**
  停止RTMP播放
 
@@ -141,6 +131,7 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
  说明：调用此方法相当于停止拉流并且关闭RTC服务。
  */
 - (BOOL)stopRtmpPlay;
+
 
 #pragma mark RTC function for line
 
@@ -175,7 +166,7 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
 /**
  发送消息
  
- @param nType 消息类型:0:普通消息;1:弹幕消息；
+ @param eType 消息类型:RTMPC_Nomal_Message_Type:普通消息;RTMPC_Barrage_Message_Type:弹幕消息
  @param strUserName 用户昵称(最大256字节)，不能为空，否则发送失败；
  @param strUserHeaderUrl 用户头像，可选；
  @param strContent 消息内容(最大1024字节)，不能为空，否则发送失败；
@@ -183,13 +174,21 @@ typedef NS_ENUM(NSInteger,VideoShowMode){
  说明：默认普通消息，以上参数均会出现在游客/主播消息回调方法中, 如果加入RTC连麦（joinRTCLine）没有设置strUserId，发送失败。
  */
 
-- (BOOL)sendUserMessage:(int)nType withUserName:(NSString*)strUserName andUserHeader:(NSString*)strUserHeaderUrl andContent:(NSString*)strContent;
+- (BOOL)sendUserMessage:(RTMPCMessageType)eType withUserName:(NSString*)strUserName andUserHeader:(NSString*)strUserHeaderUrl andContent:(NSString*)strContent;
 
 /**
  关闭RTC连接
  说明：用于关闭RTC服务，将无法进行聊天互动，人员上下线等。
  */
 - (void)leaveRTCLine;
+
+#pragma mark - 白板功能模块
+
+/**
+ 设置媒体共享回调
+ */
+@property (nonatomic, weak)id<AnyRTCUserShareBlockDelegate> share_delegate;
+
 
 @end
 
