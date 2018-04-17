@@ -23,7 +23,6 @@
 
 #import <RTMPCHybirdEngine/RTMPCHttpKit.h>
 
-#import <RTMPCHybirdEngine/AnyRTCUserShareBlockDelegate.h>
 
 
 #endif /* RTMPCHybrid_h */
