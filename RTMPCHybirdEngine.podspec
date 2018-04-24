@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/BoYuanZjq/RTMPCHybirdEngine.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/BoYuanZjq/RTMPCHybirdEngine.git", :tag => "#{s.version}",:submodules => true }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,12 +90,11 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
+  s.source_files  =  "RTMPCHybirdEngine/**/*.{h,m}"
+  #s.exclude_files = "Classes/Exclude"
+  s.public_header_files = "RTMPCHybirdEngine/**/*.{h}"
+  s.vendored_frameworks  = "RTMPCHybirdEngine/**/*.framework"
 
-   s.source_files  = 'RTMPCHybirdEngine/*'
-   # s.source_files  = "Classes", "Classes/**/*.{h}"
-   # s.exclude_files = "Classes/Exclude"
-   s.vendored_frameworks  = 'RTMPCHybirdEngine/*'
-   s.public_header_files = 'RTMPCHybirdEngine/*'
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

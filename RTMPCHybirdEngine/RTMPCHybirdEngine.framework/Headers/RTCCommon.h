@@ -64,7 +64,6 @@ typedef enum {
 }RTCCallErrorCode;
 
 //Meet
-<<<<<<< HEAD:RTMPCHybirdEngine/RTMPCHybirdEngine.framework/Headers/RTCCommon.h
 typedef enum {
     RTCMeet_Videos_HHD = 0,    //* 1920*1080 - 2048kbps
     RTCMeet_Videos_HD,        //* 1280*720 - 1024kbps
@@ -72,13 +71,6 @@ typedef enum {
     RTCMeet_Videos_SD,        //* 640*480 - 384kbps
     RTCMeet_Videos_Low,       //* 352*288 - 256kbps
     RTCMeet_Videos_Flow       //* 320*240 - 128kbps
-=======
-typedef enum {
-    RTCMeet_Videos_HD = 0,    //* 1280*720 - 1024kbps
-    RTCMeet_Videos_QHD,       //* 960*540 - 768kbps
-    RTCMeet_Videos_SD,        //* 640*480 - 512kbps
-    RTCMeet_Videos_Low        //* 352*288 - 384kbps
->>>>>>> origin/master:RTMPCHybirdEngine.framework/Headers/RTCCommon.h
 }RTCMeetVideosMode;
 //RTCP
 typedef enum {
