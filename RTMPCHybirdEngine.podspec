@@ -91,8 +91,8 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-   #s.source_files  = 'RTMPCHybirdEngine','RTMPCHybirdEngine/*.h'
-   s.source_files  = "Classes", "Classes/**/*.{h}"
+   s.source_files  = 'RTMPCHybirdEngine/*.{h}'
+   # s.source_files  = "Classes", "Classes/**/*.{h}"
    s.exclude_files = "Classes/Exclude"
    s.vendored_frameworks  = 'RTMPCHybirdEngine/RTMPCHybirdEngine.framework'
   # s.public_header_files = "RTMPCHybirdEngine/**/*.h"
