@@ -194,4 +194,16 @@ typedef enum {
     RTMPC_Nomal_Message_Type = 0,//普通文本消息
     RTMPC_Barrage_Message_Type = 1   //弹幕消息
 }RTMPCMessageType;
+//滤镜常量
+typedef enum : char {
+    //美颜滤镜
+    AnyCameraDeviceFilter_Beautiful=0,
+    //原始
+    AnyCameraDeviceFilter_Original=1,
+    //高斯模糊
+    AnyCameraDeviceFilter_GaussianBlur=2
+    
+} AnyCameraDeviceFilter;
+
+
 #endif	// __RTC_COMMON_H__

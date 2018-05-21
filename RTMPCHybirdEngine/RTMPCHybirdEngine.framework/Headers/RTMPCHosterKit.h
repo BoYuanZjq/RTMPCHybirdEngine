@@ -96,11 +96,11 @@
 - (void)switchCamera;
 
 /**
- 开启美颜:使用系统美颜，默认是关闭的
+ 设置滤镜（使用美颜相机模式，默认开启美颜）
 
- @param bEnable YES/NO:美颜/不美颜
+ @param eFilter 滤镜模式
  */
-- (void)setBeautyEnable:(BOOL) bEnable;
+- (void)setCameraFilter:(AnyCameraDeviceFilter)eFilter;
 /**
  打开手机闪光灯
 
@@ -142,7 +142,6 @@
  说明：默认打开
  */
 - (void)setFontCameraMirrorEnable:(BOOL)bEnable;
-
 
 /**
  设置水印
