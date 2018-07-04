@@ -117,6 +117,7 @@ typedef enum {
     RTMPC_LINE_V_Fullscrn = 0,		// 　默认模式：主播全屏，副主播小屏
     RTMPC_LINE_V_1_equal_others = 1,	// 　主播跟副主播视频大小一致
     RTMPC_LINE_V_1big_3small = 2,		// 　主播大屏（非全屏）副主播小屏
+	RTMPC_LINE_V_1full_4small = 3,		// 主大(是全屏),四小副
 }RTMPCLineVideoLayout;
 
 typedef enum {
@@ -205,5 +206,14 @@ typedef enum : char {
     
 } AnyCameraDeviceFilter;
 
+typedef enum {
+    //表示按比例缩放并且填满view，意味着图片可能超出view，可能被裁减掉
+    AnyRTCVideoRenderScaleAspectFill = 0,
+    //表示通过缩放来填满view，也就是说图片会变形
+    AnyRTCVideoRenderScaleToFill,
+    //表示按比例缩放并且图片要完全显示出来，意味着view可能会留有空白
+    AnyRTCVideoRenderScaleAspectFit
+    
+}AnyRTCVideoRenderMode;
 
 #endif	// __RTC_COMMON_H__

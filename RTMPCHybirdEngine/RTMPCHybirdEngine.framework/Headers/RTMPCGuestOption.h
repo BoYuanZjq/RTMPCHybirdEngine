@@ -50,6 +50,10 @@ typedef NS_ENUM(NSInteger,LinkMediaMode){
  说明：请跟主播端保持一致
  */
 @property (nonatomic, assign) RTMPCScreenOrientationType videoScreenOrientation;
+/**
+ 自动旋转(这里只支持 left 变 right  portrait 变 portraitUpsideDown)
+ */
+@property (nonatomic, assign) BOOL autorotate;
 
 /**
  播放器显示模式
