@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger,AnyMeetingType) {
  */
 @property (nonatomic, assign) BOOL autorotate;
 /**
- 设置显示模板。人数上限默认为9个，根据个人需要联系客服开通更多人会议。
+ 设置显示模板。人数上限默认为4个，根据个人需要联系客服开通更多人会议。
  说明：默认：RTC_V_1X3
  　　　RTC_V_1X3为小型会议模式，视频窗口比例默认为３：４，根据设置videoMode而定；
  　　　RTC_V_3X3_auto为多人小型会议模式，窗口比例为１：１，该模式下分辨率为288*288
