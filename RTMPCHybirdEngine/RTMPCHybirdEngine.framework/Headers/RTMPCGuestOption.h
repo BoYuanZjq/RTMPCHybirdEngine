@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RTMPCHosterOption.h"
 
-typedef NS_ENUM(NSInteger,VideoShowMode){
-    VideoShowModeWidthFill,// 默认宽度填充，高度自适应
-    VideoShowModeHightFill,// 高度填充，宽度自适应
-    VideoShowModeScaleFit// 视频在当显示窗口宽高自适应
-};
-
 typedef NS_ENUM(NSInteger,LinkMediaMode){
     LinkMediaModeVideo, //默认视频连麦模式
     LinkMediaModeAudio  //音频连麦模式
@@ -57,8 +51,8 @@ typedef NS_ENUM(NSInteger,LinkMediaMode){
 
 /**
  播放器显示模式
- 说明：默认：VideoShowModeScaleAspectFill
+ 说明：默认：AnyRTCVideoRenderScaleAspectFill
  */
-@property (nonatomic, assign) VideoShowMode videoContentMode;
+@property (nonatomic, assign) AnyRTCVideoRenderMode videoContentMode;
 
 @end

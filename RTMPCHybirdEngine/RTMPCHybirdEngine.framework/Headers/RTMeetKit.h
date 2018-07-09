@@ -115,9 +115,10 @@ typedef NSView VIEW_CLASS;
 - (void)setFontCameraMirrorEnable:(BOOL)bEnable;
 
 /**
- 设置滤镜（使用美颜相机模式，默认开启美颜）
+ 设置滤镜（默认开启美颜）
  
  @param eFilter 滤镜模式
+ 说明:只有使用美颜相机模式才有用
  */
 - (void)setCameraFilter:(AnyCameraDeviceFilter)eFilter;
 
