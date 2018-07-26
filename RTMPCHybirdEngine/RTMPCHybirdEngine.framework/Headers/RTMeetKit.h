@@ -105,7 +105,11 @@ typedef NSView VIEW_CLASS;
  */
 - (void)updateLocalVideoRenderModel:(AnyRTCVideoRenderMode)eVideoRenderMode;
 
-
+/**
+ 重置音频录音和播放
+ 说明:使用AVplayer播放后调用该方法
+ */
+- (void)doRestartAudioRecord;
 /**
  设置前置摄像头镜像是否打开
  
