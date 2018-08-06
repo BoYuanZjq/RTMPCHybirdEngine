@@ -111,12 +111,12 @@ typedef NSView VIEW_CLASS;
  */
 - (void)doRestartAudioRecord;
 /**
- 设置前置摄像头镜像是否打开
+ 设置本地前置摄像头镜像是否打开
  
  @param bEnable YES为打开，NO为关闭
- 说明：默认打开(目前只支持美颜相机)
+ @return 镜像成功与否
  */
-- (void)setFontCameraMirrorEnable:(BOOL)bEnable;
+- (BOOL)setFontCameraMirrorEnable:(BOOL)bEnable;
 
 /**
  设置滤镜（默认开启美颜）

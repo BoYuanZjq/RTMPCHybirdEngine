@@ -107,13 +107,15 @@
  返回值：相机当前焦距
  */
 - (CGFloat)getCameraZoom;
-/**
- 设置前置摄像头镜像是否打开
+
+ /**
+ 设置本地前置摄像头镜像是否打开
  
  @param bEnable YES为打开，NO为关闭
- 说明：默认关闭
+ @return 镜像成功与否
  */
-- (void)setFontCameraMirrorEnable:(BOOL)bEnable;
+- (BOOL)setFontCameraMirrorEnable:(BOOL)bEnable;
+
 
 #pragma mark Rtmp function for pull rtmp stream
 /**
