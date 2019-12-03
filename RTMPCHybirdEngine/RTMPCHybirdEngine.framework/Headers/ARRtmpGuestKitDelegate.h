@@ -85,7 +85,7 @@
  断开RTC服务连接
  
  @param code 状态码
- 说明：主播端关闭直播断开RTC服务后会回调此方法。自己加入RTC后，断网后在链接网络，会回调此方法
+ 说明：主播端关闭直播断开RTC服务后会回调此方法或自己加入RTC后，断网后在链接网络，会回调此方法
  */
 - (void)onRTCLineLeave:(ARRtmpCode)code;
 

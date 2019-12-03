@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ARRtmpGuestKitDelegate.h"
-#import "ARShareDelegate.h"
 #import "ARGuestOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -191,13 +190,6 @@ NS_ASSUME_NONNULL_BEGIN
  说明：用于关闭RTC服务，将无法进行聊天互动，人员上下线等。
  */
 - (void)leaveRTCLine;
-
-#pragma mark - 白板功能模块
-
-/**
- 设置媒体共享回调
- */
-@property (nonatomic, weak)id<ARShareDelegate> share_delegate;
 
 
 @end

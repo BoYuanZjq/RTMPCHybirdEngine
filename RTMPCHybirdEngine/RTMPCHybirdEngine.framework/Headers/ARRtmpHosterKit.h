@@ -238,6 +238,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setVideoTemplate:(ARMixVideoHorModel)hor ver:(ARMixVideoVerModel)ver dir:(ARMixVideoDirModel)dir horPad:(int)horPad verPad:(int)verPad borderWidth:(int)borderWidth;
 
+
+
 @end
 
 NS_ASSUME_NONNULL_END

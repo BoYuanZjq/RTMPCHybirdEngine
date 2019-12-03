@@ -30,8 +30,6 @@
 #import <RTMPCHybirdEngine/ARRtmpEnum.h>
 #import <RTMPCHybirdEngine/ARCommonEnum.h>
 
-#import <RTMPCHybirdEngine/ARShareDelegate.h>
-
 
 
 #endif /* ARRtmpSDK_h */
